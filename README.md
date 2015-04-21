@@ -13,8 +13,8 @@ Any feedback is welcome!
 * Domain Driven Style
 * OOP style for class message interaction, Function style for better impelemenation
  
-# start-up
+# Start-up
 ./activator run
 
-# API documentation by swagger
+# API documentation by Swagger
 http://127.0.0.1:9000/assets/api-docs/index.html
