@@ -1,6 +1,6 @@
 package controllers
 
-import infrastructure.InTransaction
+import infrastructure.{WatchTime, InTransaction}
 
 import scala.collection.JavaConversions._
 import com.wordnik.swagger.annotations._
@@ -50,7 +50,9 @@ class MemoController(
 
   @ApiOperation(nickname = "remove", value = "remove a memo", response = classOf[String], httpMethod = "DELETE")
   def remove(memoId: Long) = Action { implicit request =>
-    memoRepository.delete(memoId)
+    WatchTime("Deleting a memo") {
+      memoRepository.delete(memoId)
+    }
     success
   }
 
