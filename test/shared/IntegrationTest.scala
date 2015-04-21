@@ -1,0 +1,6 @@
+package shared
+
+import org.springframework.transaction.annotation.Transactional
+
+@Transactional
+abstract class IntegrationTest extends NonTransactionalIntegrationTest

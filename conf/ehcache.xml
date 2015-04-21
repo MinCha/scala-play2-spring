@@ -1,0 +1,28 @@
+<ehcache
+        updateCheck="true"
+        monitoring="autodetect"
+        dynamicConfig="true"
+        maxBytesLocalHeap="150M"
+        >
+
+    <diskStore path="java.io.tmpdir"/>
+
+    <cache name="some"
+           maxBytesLocalHeap="1M"
+           timeToLiveSeconds="10"
+           eternal="false"
+           timeToIdleSeconds="300"
+           overflowToDisk="true"
+           maxElementsOnDisk="1000"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="other"
+           maxBytesLocalHeap="1M"
+           timeToLiveSeconds="10"
+           eternal="false"
+           timeToIdleSeconds="300"
+           overflowToDisk="true"
+           maxElementsOnDisk="1000"
+           memoryStoreEvictionPolicy="LRU"/>
+
+</ehcache>
