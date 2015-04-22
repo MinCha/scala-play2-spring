@@ -26,7 +26,7 @@ class LazyFutureTest extends UnitTest {
   }
 
 
-  @Test def EFuture안에서_EFuture를_사용할_경우에도_정상_동작한다() {
+  @Test def canExecuteBlockOnNestedLazyFuture() {
     LazyFutureBlockInCurrentThread {
       LazyFuture {
         number += 1
