@@ -11,10 +11,10 @@ Any feedback is welcome!
 * Persistent Layer by Spring Data JPA(Hibernate)
 * API Documentation by Swagger 
 * Domain Driven Style
-* OOP style for class message interaction, Function style for better impelemenation
+* OOP style for message interaction among classes, Functional style for better impelemenation
  
 # Start-up
-./activator run
+$PROJECT_ROOT]./activator run
 
 # API documentation by Swagger
 http://127.0.0.1:9000/assets/api-docs/index.html
