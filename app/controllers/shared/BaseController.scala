@@ -10,17 +10,17 @@ abstract class BaseController extends Controller with BaseAction {
   @Autowired
   val v: V = null
 
-  class SuccessJsonWrapper(result: SuccessResult) {
+  implicit class SuccessJsonWrapper(result: SuccessResult) {
     def toJson = Json.toJson(result)
   }
 
-  class FailJsonWrapper(result: FailureResult) {
+  implicit class FailJsonWrapper(result: FailureResult) {
     def toJson = Json.toJson(result)
   }
 
-  implicit def toJson(result: SuccessResult): SuccessJsonWrapper = new SuccessJsonWrapper(result)
-
-  implicit def toJson(result: FailureResult): FailJsonWrapper = new FailJsonWrapper(result)
+  implicit class NullWrapper[T](t: T) {
+    def optional = Option(t)
+  }
 
   def validateThenExecute[T](form: Form[T], success: T => Result)(implicit request: play.api.mvc.Request[_]): Result = {
     form.bindFromRequest.fold(formWithErrors => {

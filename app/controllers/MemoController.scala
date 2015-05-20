@@ -17,7 +17,9 @@ class MemoController(
                       @Autowired memoBookService: MemoBookService,
                       @Autowired memoBookRepository: MemoBookRepository,
                       @Autowired memoRepository: MemoRepository) extends BaseController {
+
   case class MemoAddRequest(memo: String)
+
   val MemoAddRequestMapping = mapping(
     "memo" -> nonEmptyText)(MemoAddRequest.apply)(MemoAddRequest.unapply)
 

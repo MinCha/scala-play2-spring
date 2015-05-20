@@ -15,9 +15,11 @@ import views.UserView
 @Controller
 @Api(value = "/auth", description = "auth")
 class AuthenticationController(
-                      @Autowired userRepository: UserRepository,
-                      authenticatedUserRepository: AuthenticatedUserRepository = new HttpSessionAuthenticatedUserRepository()) extends BaseController {
+                                @Autowired userRepository: UserRepository,
+                                authenticatedUserRepository: AuthenticatedUserRepository = new HttpSessionAuthenticatedUserRepository()) extends BaseController {
+
   case class SignupRequest(id: String, password: String, name: String)
+
   case class SigninRequest(id: String, password: String)
 
   val SignupRequestMapping = mapping(
@@ -35,10 +37,8 @@ class AuthenticationController(
     new ApiImplicitParam(name = "password", required = true, dataType = "string", paramType = "form"),
     new ApiImplicitParam(name = "name", required = true, dataType = "string", paramType = "form")))
   def signup() = withForm(SignupRequestMapping) { form => implicit request =>
-    val dbUser = userRepository.findOne(form.id)
-
-    if (dbUser != null) {
-      fail(ErrorDescription(ExceptionType.AlreadyRegistered, "Already registered", ""))
+    if (userRepository.exists(form.id)) {
+      fail(ErrorDescription(ExceptionType.AlreadyRegistered, "Already registered as same Id", ""))
     } else {
       val newUser = userRepository.save(new User(form.id, form.password, form.name))
       successLogin(newUser)
@@ -50,11 +50,12 @@ class AuthenticationController(
     new ApiImplicitParam(name = "id", required = true, dataType = "string", paramType = "form"),
     new ApiImplicitParam(name = "password", required = true, dataType = "string", paramType = "form")))
   def signin() = withForm(SigninRequestMapping) { form => implicit request =>
-    val user = userRepository.findOne(form.id)
+    val optionalUser = userRepository.findOne(form.id).optional
 
-    if (user == null) {
+    if (optionalUser.isEmpty) {
       fail(ErrorDescription(ExceptionType.Unregistered, "User not found", ""))
     } else {
+      val user = optionalUser.get
       if (user.password == form.password) {
         successLogin(user)
       } else {
