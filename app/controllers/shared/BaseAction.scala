@@ -8,9 +8,6 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-/**
- * Created by elvin on 15. 5. 18..
- */
 trait BaseAction {
   private def bindFromRequest[T](implicit request: play.api.mvc.Request[_], formMapping: play.api.data.Mapping[T]): T = {
     val form = Form(formMapping)
@@ -32,7 +29,7 @@ trait BaseAction {
     withUser(play.api.mvc.BodyParsers.parse.anyContent)(f)
   }
 
-  def withUserAndForm[T,A](bodyParser: play.api.mvc.BodyParser[A], formMapping: play.api.data.Mapping[T])(f: AuthenticatedUser => T => Request[A] => Result): EssentialAction = {
+  def withUserAndForm[T, A](bodyParser: play.api.mvc.BodyParser[A], formMapping: play.api.data.Mapping[T])(f: AuthenticatedUser => T => Request[A] => Result): EssentialAction = {
     withUser(bodyParser) {
       user => request => {
         val formData: T = bindFromRequest(request, formMapping)
@@ -45,7 +42,7 @@ trait BaseAction {
     withUserAndForm(play.api.mvc.BodyParsers.parse.anyContent, formMapping)(f)
   }
 
-  def withForm[T,A](bodyParser: play.api.mvc.BodyParser[A], formMapping: play.api.data.Mapping[T])(f: T => Request[A] => Result): EssentialAction = {
+  def withForm[T, A](bodyParser: play.api.mvc.BodyParser[A], formMapping: play.api.data.Mapping[T])(f: T => Request[A] => Result): EssentialAction = {
     Action(bodyParser) {
       request => {
         val formData: T = bindFromRequest(request, formMapping)
