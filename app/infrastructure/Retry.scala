@@ -1,12 +1,7 @@
 package infrastructure
 
-import java.net.HttpRetryException
-
 import play.api.Logger
 
-/**
- * Created by vayne on 15. 2. 12..
- */
 class Retry {
   def execute[T](count: Int)(f: => T): T = {
     try {

@@ -8,13 +8,16 @@ import org.mockito.Mockito._
 
 class MemoBookServiceTest extends UnitTest {
   val memoBookRepository = mock[MemoBookRepository]
+  val userRepository = mock[UserRepository]
   val v = mock[V]
   val memoBook = mock[MemoBook]
+  val user = mock[User]
 
   @Test def shouldUseExistingMemoBook() {
-    val sut = new MemoBookService(memoBookRepository, v)
+    val sut = new MemoBookService(userRepository, memoBookRepository, v)
     val userId = "vayne"
     val memo = "I am very happy."
+    when(userRepository.findOne(userId)).thenReturn(user)
     when(memoBookRepository.countByUserId(userId)).thenReturn(1)
     when(memoBookRepository.findByUserId(userId)).thenReturn(memoBook)
 
@@ -24,9 +27,10 @@ class MemoBookServiceTest extends UnitTest {
   }
 
   @Test def shouldCreateMemoBookWhenNoMemoBookYet() {
-    val sut = new MemoBookService(memoBookRepository, v)
+    val sut = new MemoBookService(userRepository, memoBookRepository, v)
     val userId = "vayne"
     val memo = "I am very happy."
+    when(userRepository.findOne(userId)).thenReturn(user)
     when(memoBookRepository.countByUserId(userId)).thenReturn(0)
 
     sut.add(userId, memo)

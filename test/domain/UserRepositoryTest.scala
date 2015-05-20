@@ -8,7 +8,7 @@ class UserRepositoryTest extends IntegrationTest {
   @Autowired val sut: UserRepository = null
 
   @Test def canAddUser() {
-    val user = new User("vayne.q", "vayne")
+    val user = new User("vayne.q", "1234", "vayne")
 
     sut.save(user)
     flushAndClear()

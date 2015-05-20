@@ -7,21 +7,24 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MemoBookService(
-                       @Autowired repository: MemoBookRepository,
+                       @Autowired userRepository: UserRepository,
+                       @Autowired memoBookRepository: MemoBookRepository,
                        @Autowired v: V) {
   @Transactional
   def add(userId: String, memo: String): MemoBook = {
+    val user = userRepository.findOne(userId)
+
     val memoBook =
-      if (repository.countByUserId(userId) == 1)
-        repository.findByUserId(userId)
+      if (memoBookRepository.countByUserId(userId) == 1)
+        memoBookRepository.findByUserId(userId)
       else {
-        new MemoBook(new User(userId, v.DefaultUserName))
+        new MemoBook(user)
       }
 
     memoBook.addMemo(memo)
-    repository.save(memoBook)
+    memoBookRepository.save(memoBook)
     memoBook
   }
 
-  def this() = this(null, null)
+  def this() = this(null, null, null)
 }

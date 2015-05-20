@@ -10,6 +10,7 @@ object ExceptionType extends Enumeration {
   val Unauthorized = 3
   val Forbidden = 4
   val Unregistered = 5
+  val AlreadyRegistered = 6
 }
 
 class BaseException(r: ShortReason, message: String) extends RuntimeException(message) {
@@ -21,3 +22,9 @@ class NotFoundException(message: String, idz: String) extends BaseException(Exce
 }
 
 class MemoNotFoundException(id: String) extends NotFoundException("Memo not found.", id)
+
+class UnauthorizedException extends BaseException(ExceptionType.Unauthorized, "Unauthorized User")
+
+class UnregisteredException extends BaseException(ExceptionType.Unauthorized, "Unauthorized User")
+
+class InvaildParameterException extends BaseException(ExceptionType.InvalidStatus, "Invalid Parameter")

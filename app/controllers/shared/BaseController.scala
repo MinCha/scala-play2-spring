@@ -6,7 +6,7 @@ import play.api.data.Form
 import play.api.mvc.{Result, Controller}
 import views.shared.{ListView, View, FailureResult, SuccessResult}
 
-abstract class BaseController extends Controller {
+abstract class BaseController extends Controller with BaseAction {
   @Autowired
   val v: V = null
 

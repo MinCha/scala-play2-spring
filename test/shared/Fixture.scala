@@ -10,7 +10,7 @@ import scala.util.Random
 trait Fixture {
   def randomString = new Random().nextInt().toString
 
-  def someUser = new User(randomString, randomString)
+  def someUser = new User(randomString, randomString, randomString)
 
   def someMemoBook = new MemoBook(someUser)
 }

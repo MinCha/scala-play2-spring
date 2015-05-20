@@ -7,7 +7,7 @@ import shared.UnitTest
 class JsonTest extends UnitTest {
 
   @Test def canConvertToJsonFromModel() {
-    val json = Json.toJson(new User("vayne.q", "vayne"))
+    val json = Json.toJson(new User("vayne.q", "1234", "vayne"))
     val result = Json.fromJson(json, classOf[User])
 
     assert(result.id == "vayne.q")
