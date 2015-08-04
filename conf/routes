@@ -18,6 +18,7 @@ POST    /auth/signup @controllers.AuthenticationController.signup
 POST    /auth/signin  @controllers.AuthenticationController.signin
 
 # Memo
+POST 	/download @controllers.FileDownloadController.download
 POST 	/memo @controllers.MemoController.add
 GET 	/memo @controllers.MemoController.getList
 GET 	/memo/:memoId @controllers.MemoController.get(memoId: Long)
